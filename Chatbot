@@ -10,7 +10,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import datetime
 
 # Archivo de credenciales y configuración de Google API
-SERVICE_ACCOUNT_FILE = 'C:/Users/User/OneDrive/Escritorio/ChatBotKif/credentials.json'
+SERVICE_ACCOUNT_FILE = 'C:/Users/User/OneDrive/Escritorio/ChatBotKif/fluid-firefly-439000-t3-4b3bbe212b67.json'
 SCOPES = [
     'https://www.googleapis.com/auth/calendar',
     'https://www.googleapis.com/auth/gmail.send'
@@ -24,7 +24,7 @@ credentials = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 calendar_service = build('calendar', 'v3', credentials=credentials)
-calendar_id = 'santi.1234.azcurra@gmail.com'
+calendar_id = 'santi.1234.azcurra@gmail.com' #Acá tenes que poner tu mail para que te aparezca en tu calendar
 
 # Comando para agendar un evento
 async def agendar_evento(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -53,7 +53,7 @@ async def agendar_evento(update: Update, context: ContextTypes.DEFAULT_TYPE):
         }
 
         event = calendar_service.events().insert(calendarId=calendar_id, body=event).execute()
-        await update.message.reply_text(f'Evento creado: {event.get("htmlLink")}')
+        await update.message.reply_text(f'¡Perfecto! Agendo tu reunión: {event.get("htmlLink")}')
     except HttpError as error:
         await update.message.reply_text(f'Error al crear el evento: {error}')
 
@@ -114,7 +114,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Manejador de texto para mensajes no relacionados con comandos
 async def manejar_texto(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("No entiendo este mensaje. Usa /start para ver con què tareas te puedo ayudar.")
+    await update.message.reply_text("No entiendo este mensaje. Usa /start para ver con qué tareas te puedo ayudar.")
 
 # Función principal del bot
 def main():
@@ -134,3 +134,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
